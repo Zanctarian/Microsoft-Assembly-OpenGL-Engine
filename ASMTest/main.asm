@@ -39,6 +39,7 @@ extern glLoadIdentity: PROC
 extern wglGetProcAddress: PROC
 
 include utils.inc
+include keys.asm
 
 GLFW_CONTEXT_VERSION_MAJOR equ 00022002h
 GLFW_CONTEXT_VERSION_MINOR equ 00022003h
@@ -193,6 +194,7 @@ mainLoop PROC
 
 	call glfwPollEvents
 
+<<<<<<< Updated upstream
 	; Check esc key
 	mov rcx, [window_id]
 	mov rdx, GLFW_KEY_ESCAPE
@@ -200,6 +202,10 @@ mainLoop PROC
 	cmp rax, GLFW_PRESS
 	je exitProgram
 
+=======
+	call handleKeyInputs
+	
+>>>>>>> Stashed changes
 	; Check for if the window is ready to close
 	mov rcx, [window_id]
 	call glfwWindowShouldClose

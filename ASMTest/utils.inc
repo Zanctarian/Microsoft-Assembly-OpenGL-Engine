@@ -57,3 +57,7 @@ str_concat_2 PROC
 	jne str_concat_2
 	ret
 str_concat_2 ENDP
+
+exitProgram PROC
+	call ExitProcess
+exitProgram ENDP

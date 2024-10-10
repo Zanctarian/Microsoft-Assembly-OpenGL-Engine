@@ -21,9 +21,10 @@
   <ItemGroup>
     <MASM Include="main.asm">
       <FileType>Document</FileType>
-      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">H:/VS/ASMTest/ASMTest/;%(IncludePaths)</IncludePaths>
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">H:/VS/ASMTest/ASMTest/;H:/VS/ASMTest/ASMTest/listeners;%(IncludePaths)</IncludePaths>
       <IncludePaths Condition="'$(Configuration)|$(Platform)'=='Release|x64'">H:/VS/ASMTest/ASMTest/;%(IncludePaths)</IncludePaths>
     </MASM>
+    <None Include="listeners\keys.asm" />
     <None Include="utils.inc">
       <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -41,13 +42,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -60,7 +61,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
