@@ -1,5 +1,6 @@
 includelib ucrt.lib
 
+extern ExitProcess: PROC
 extern printf: PROC
 
 print_line MACRO str_pointer
@@ -31,6 +32,11 @@ __float__ MACRO value
 ENDM
 
 .code
+
+exitProgram PROC
+	call ExitProcess
+exitProgram ENDP
+
 ; rcx = 1, rdx = 2, rdi = source
 str_concat PROC
 	; Append bytes for first, ignore 0 terminator
@@ -57,7 +63,3 @@ str_concat_2 PROC
 	jne str_concat_2
 	ret
 str_concat_2 ENDP
-
-exitProgram PROC
-	call ExitProcess
-exitProgram ENDP

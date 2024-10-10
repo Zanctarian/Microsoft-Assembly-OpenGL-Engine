@@ -21,11 +21,16 @@
   <ItemGroup>
     <MASM Include="main.asm">
       <FileType>Document</FileType>
-      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">H:/VS/ASMTest/ASMTest/;H:/VS/ASMTest/ASMTest/listeners;%(IncludePaths)</IncludePaths>
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">H:/VS/ASMTest/ASMTest/;H:/VS/ASMTest/ASMTest/listeners;H:/VS/ASMTest/ASMTest/objects;%(IncludePaths)</IncludePaths>
       <IncludePaths Condition="'$(Configuration)|$(Platform)'=='Release|x64'">H:/VS/ASMTest/ASMTest/;%(IncludePaths)</IncludePaths>
     </MASM>
-    <None Include="listeners\keys.asm" />
-    <None Include="utils.inc">
+    <None Include="objects\draw_objects.asm">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="listeners\keys.asm">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="utils.asm">
       <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>

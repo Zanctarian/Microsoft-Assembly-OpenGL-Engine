@@ -5,7 +5,6 @@ includelib vcruntime.lib
 includelib glfw3.lib
 includelib opengl32.lib
 
-extern ExitProcess: PROC
 extern printf: PROC
 extern glfwInit: PROC
 extern glfwCreateWindow: PROC
@@ -26,8 +25,6 @@ extern glViewport: PROC
 extern glLoadIdentity: PROC
 extern glBegin: PROC
 extern glColor3f: PROC
-extern glVertex2f: PROC
-extern glVertex3f: PROC
 extern glEnd: PROC
 extern glFlush: PROC
 extern glMatrixMode: PROC
@@ -38,8 +35,9 @@ extern glLineWidth: PROC
 extern glLoadIdentity: PROC
 extern wglGetProcAddress: PROC
 
-include utils.inc
+include utils.asm
 include keys.asm
+include draw_objects.asm
 
 GLFW_CONTEXT_VERSION_MAJOR equ 00022002h
 GLFW_CONTEXT_VERSION_MINOR equ 00022003h
@@ -129,10 +127,6 @@ _start PROC
 	call mainLoop
 _start ENDP
 
-exitProgram PROC
-	call ExitProcess
-exitProgram ENDP
-
 mainLoop PROC
 	cdecl_begin
 
@@ -164,25 +158,7 @@ mainLoop PROC
 	movss xmm2, __float__(0.0)
 	call glColor3f
 
-	movss xmm0, __float__(1.0)
-	movss xmm1, __float__(1.0)
-	movss xmm2, __float__(1.0)
-	call glVertex3f
-
-	movss xmm0, __float__(-1.0)
-	movss xmm1, __float__(1.0)
-	movss xmm2, __float__(1.0)
-	call glVertex3f
-
-	movss xmm0, __float__(-1.0)
-	movss xmm1, __float__(-1.0)
-	movss xmm2, __float__(1.0)
-	call glVertex3f
-
-	movss xmm0, __float__(1.0)
-	movss xmm1, __float__(-1.0)
-	movss xmm2, __float__(1.0)
-	call glVertex3f
+	call drawCube
 
 	call glEnd
 
@@ -194,7 +170,6 @@ mainLoop PROC
 
 	call glfwPollEvents
 
-<<<<<<< Updated upstream
 	; Check esc key
 	mov rcx, [window_id]
 	mov rdx, GLFW_KEY_ESCAPE
@@ -202,10 +177,8 @@ mainLoop PROC
 	cmp rax, GLFW_PRESS
 	je exitProgram
 
-=======
 	call handleKeyInputs
 	
->>>>>>> Stashed changes
 	; Check for if the window is ready to close
 	mov rcx, [window_id]
 	call glfwWindowShouldClose
