@@ -18,13 +18,16 @@ extern glfwDestroyWindow: PROC
 extern glfwWindowHint: PROC
 extern glfwDefaultWindowHints: PROC
 extern glfwGetFramebufferSize: PROC
+extern glfwGetKey: PROC
 
 extern glClearColor: PROC
 extern glClear: PROC
 extern glViewport: PROC
+extern glLoadIdentity: PROC
 extern glBegin: PROC
 extern glColor3f: PROC
 extern glVertex2f: PROC
+extern glVertex3f: PROC
 extern glEnd: PROC
 extern glFlush: PROC
 extern glMatrixMode: PROC
@@ -33,6 +36,7 @@ extern glPushMatrix: PROC
 extern glPopMatrix: PROC
 extern glLineWidth: PROC
 extern glLoadIdentity: PROC
+extern wglGetProcAddress: PROC
 
 include utils.inc
 
@@ -42,8 +46,11 @@ GLFW_OPENGL_FORWARD_COMPAT equ 22006h
 GLFW_OPENGL_PROFILE equ 22008h
 GLFW_OPENGL_CORE_PROFILE equ 32001h
 
+GLFW_KEY_ESCAPE equ 256
+GLFW_PRESS equ 1
+
 GL_COLOR_BUFFER_BIT equ 4000h
-GL_TRIANGLES equ 4h
+GL_QUADS equ 7h
 GL_PROJECTION equ 1701h
 GL_MODELVIEW equ 1700h
 
@@ -121,12 +128,18 @@ _start PROC
 	call mainLoop
 _start ENDP
 
+exitProgram PROC
+	call ExitProcess
+exitProgram ENDP
+
 mainLoop PROC
 	cdecl_begin
 
 	; Clear the previous screen
 	mov rcx, GL_COLOR_BUFFER_BIT
 	call glClear
+
+	call glLoadIdentity
 
 	; Get the current size of the window
 	mov rcx, [window_id]
@@ -141,25 +154,34 @@ mainLoop PROC
 	call glViewport
 
 	; Render the triangle
-	mov rcx, GL_TRIANGLES
+	mov rcx, GL_QUADS
 	call glBegin
 
+	; square
 	movss xmm0, __float__(1.0)
 	movss xmm1, __float__(0.0)
 	movss xmm2, __float__(0.0)
 	call glColor3f
 
-	movss xmm0, __float__(-0.6)
-	movss xmm1, __float__(-0.4)
-	call glVertex2f
+	movss xmm0, __float__(1.0)
+	movss xmm1, __float__(1.0)
+	movss xmm2, __float__(1.0)
+	call glVertex3f
 
-	movss xmm0, __float__(0.6)
-	movss xmm1, __float__(-0.4)
-	call glVertex2f
+	movss xmm0, __float__(-1.0)
+	movss xmm1, __float__(1.0)
+	movss xmm2, __float__(1.0)
+	call glVertex3f
 
-	movss xmm0, __float__(0.0)
-	movss xmm1, __float__(0.6)
-	call glVertex2f
+	movss xmm0, __float__(-1.0)
+	movss xmm1, __float__(-1.0)
+	movss xmm2, __float__(1.0)
+	call glVertex3f
+
+	movss xmm0, __float__(1.0)
+	movss xmm1, __float__(-1.0)
+	movss xmm2, __float__(1.0)
+	call glVertex3f
 
 	call glEnd
 
@@ -170,6 +192,13 @@ mainLoop PROC
 	call glfwSwapBuffers
 
 	call glfwPollEvents
+
+	; Check esc key
+	mov rcx, [window_id]
+	mov rdx, GLFW_KEY_ESCAPE
+	call glfwGetKey
+	cmp rax, GLFW_PRESS
+	je exitProgram
 
 	; Check for if the window is ready to close
 	mov rcx, [window_id]
@@ -184,7 +213,7 @@ mainLoop PROC
 	call glfwDestroyWindow
 	call glfwTerminate
 
-	call ExitProcess
+	jmp exitProgram
 	cdecl_end
 mainLoop ENDP
 
