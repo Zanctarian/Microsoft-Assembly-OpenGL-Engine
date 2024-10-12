@@ -4,10 +4,12 @@
     <MASM Include="main.asm" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="utils.inc" />
-<<<<<<< Updated upstream
-=======
+    <None Include="math\trig.asm" />
+    <None Include="math\mat4.asm" />
+    <None Include="math\vec.asm" />
+    <None Include="objects\draw_objects.asm" />
     <None Include="listeners\keys.asm" />
->>>>>>> Stashed changes
+    <None Include="utils.asm" />
+    <None Include="shaders\shader_program.asm" />
   </ItemGroup>
 </Project>

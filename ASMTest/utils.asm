@@ -3,13 +3,42 @@ includelib ucrt.lib
 extern ExitProcess: PROC
 extern printf: PROC
 
-print_line MACRO str_pointer
-    lea rcx, str_pointer
-	lea rbx, str_new_line
+.code
+print_line_concat MACRO str_pointer_left, str_pointer_right
+	lea rcx, str_pointer_left
+	lea rdx, str_pointer_right
+	print_line_concat_rcx_rdx
+ENDM
+
+print_line_concat_rcx_rdx MACRO
+	lea rdi, err_msg
+	call str_concat
+	
+	lea rcx, err_msg
+	print_line_rcx
+ENDM
+
+print_line_rcx MACRO
+	lea rdx, str_new_line
 	lea rdi, err_msg
 	call str_concat
 	lea rcx, err_msg
 	call printf
+ENDM
+
+print_line MACRO str_pointer
+    lea rcx, str_pointer
+	print_line_rcx
+ENDM
+
+load_gl_func MACRO func_variable, func_name_pointer
+	lea rcx, func_name_pointer                                 ; Assign function name string to rcx. Variable cant be named identical to the function for whatever reason
+	call wglGetProcAddress                                     ; equal to wglGetProcAddress("glCreateShader");   Store pointer for function in rax.
+	mov [func_variable], rax                                   ; Store pointer in rax to variable glCreateShader
+	test rax, rax                                              ; Check to see if the pointer is valid, aka if it even exists
+	lea rcx, func_name_pointer                                 ; Load the error message for if its invalid
+	jz gl_func_err                                             ; Jump to error handler with assigned message if test fails
+	print_line_concat gl_func_info_pre, func_name_pointer      ; If test is a success, print the init message.
 ENDM
 
 cdecl_begin MACRO
@@ -55,8 +84,8 @@ str_concat ENDP
 
 ; Do the loop again for the other string but keep the 0 terminator
 str_concat_2 PROC
-	mov al, [rbx]
-	inc rbx
+	mov al, [rdx]
+	inc rdx
 	mov [rdi], al
 	inc rdi
 	cmp al, 0

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Clean Build|Win32">
+      <Configuration>Clean Build</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Clean Build|x64">
+      <Configuration>Clean Build</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -21,9 +29,21 @@
   <ItemGroup>
     <MASM Include="main.asm">
       <FileType>Document</FileType>
-      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">H:/VS/ASMTest/ASMTest/;H:/VS/ASMTest/ASMTest/listeners;H:/VS/ASMTest/ASMTest/objects;%(IncludePaths)</IncludePaths>
-      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='Release|x64'">H:/VS/ASMTest/ASMTest/;%(IncludePaths)</IncludePaths>
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">H:/VS/ASMTest/ASMTest/;H:/VS/ASMTest/ASMTest/listeners;H:/VS/ASMTest/ASMTest/models;H:/VS/ASMTest/ASMTest/math;H:/VS/ASMTest/ASMTest/shaders;%(IncludePaths)</IncludePaths>
+      <IncludePaths Condition="'$(Configuration)|$(Platform)'=='Release|x64'">H:/VS/ASMTest/ASMTest/;H:/VS/ASMTest/ASMTest/listeners;H:/VS/ASMTest/ASMTest/models;H:/VS/ASMTest/ASMTest/math;H:\masm64\include64;%(IncludePaths)</IncludePaths>
     </MASM>
+    <None Include="shaders\shader_program.asm">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="math\trig.asm">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="math\mat4.asm">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="math\vec.asm">
+      <FileType>Document</FileType>
+    </None>
     <None Include="objects\draw_objects.asm">
       <FileType>Document</FileType>
     </None>
@@ -69,6 +89,12 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Clean Build|Win32'">
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Clean Build|x64'">
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -143,6 +169,10 @@
       <EntryPointSymbol>_start</EntryPointSymbol>
       <AdditionalLibraryDirectories>H:\OpenGLBinaries\glfw-lib-vc2019;H:\OpenGLBinaries\glew-2.1.0\lib\Release\x64;H:\OpenGLBinaries\glew-2.1.0\bin\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <LargeAddressAware>false</LargeAddressAware>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <PreventDllBinding>true</PreventDllBinding>
+      <LinkStatus>true</LinkStatus>
     </Link>
     <CustomBuildStep>
       <Command>
