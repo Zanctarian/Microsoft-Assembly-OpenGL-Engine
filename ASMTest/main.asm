@@ -53,6 +53,8 @@ GL_QUADS equ 7h
 GL_PROJECTION equ 1701h
 GL_MODELVIEW equ 1700h
 
+GL_TRIANGLES equ 4h
+
 GL_TRUE equ 1
 GL_FALSE equ 0
 
@@ -153,12 +155,24 @@ mainLoop PROC
 	call glBegin
 
 	; square
+	movss xmm0, __float__(0.25)
+	movss xmm1, __float__(0.25)
+	movss xmm2, __float__(0.25)
+	call glColor3f
+
+	call drawCube
+
+	call glEnd
+
+	mov rcx, GL_TRIANGLES
+	call glBegin
+
 	movss xmm0, __float__(1.0)
 	movss xmm1, __float__(0.0)
 	movss xmm2, __float__(0.0)
 	call glColor3f
 
-	call drawCube
+	call drawTriangle
 
 	call glEnd
 
